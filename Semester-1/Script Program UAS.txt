@@ -1,0 +1,140 @@
+Dim KoneksiDB As New ADODB.Connection
+Dim Bayar As ADODB.Recordset
+
+Sub BukaDB()
+  Set KoneksiDB = New ADODB.Connection
+  Set Bayar = New ADODB.Recordset
+  KoneksiDB.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & App.Path & "\UAS_ArifSiddikMuharam.mdb;"
+End Sub
+
+Private Sub btnHapus_Click()
+    Call BukaDB
+    Dim tambahdataa
+    Dim cekdata
+    Dim sqlcekdata
+    Dim hapusdata
+    cekdata = "SELECT * FROM Bayar WHERE NoPenumpang = '" & formNoPenumpang & "'"
+    Set sqlcekdata = KoneksiDB.Execute(cekdata)
+    If Not sqlcekdata.EOF Then
+        If MsgBox("Data dengan No Penumpang " + formNoPenumpang + " sudah tersedia, Apakah Anda ingin menghapus data ini dari Database?", 36, "Informasi") = vbYes Then
+          hapusdata = "DELETE FROM Bayar WHERE NoPenumpang = '" & formNoPenumpang & "'"
+          KoneksiDB.Execute (hapusdata)
+          MsgBox "Data Penjualan Tiket Bus Berhasil Dihapus ^_^"
+          Adodc1.Refresh
+        End If
+    End If
+End Sub
+
+Private Sub btnHitung_Click()
+  Dim formTarifDasar1
+  Dim formTotal1
+  Dim formTarifTambahan1
+  Dim formDiskon1
+  Dim formBayar1
+  If formJumlahTiket = "" Then
+    formNoPenumpang = "P000"
+    formNamaPenumpang = "Arif"
+    formKodeBus = "GO"
+    formKodeKelas = "BS"
+    formNamaBus = ""
+    formKelas = ""
+    formJurusan = ""
+    formTarifDasar = ""
+    formTarifTambahan = ""
+    formTotal = ""
+    formDiskon = ""
+    formBayar = ""
+  Else
+    If formKodeBus = "GO" Then
+        formTarifDasar1 = 80000
+        formTarifDasar = "Rp. 80.000"
+        formNamaBus = "P.O. Sahabat"
+        formJurusan = "Jakarta - Cirebon"
+    ElseIf formKodeBus = "KU" Then
+        formTarifDasar1 = 300000
+        formTarifDasar = "Rp. 300.000"
+        formNamaBus = "P.O. Kramat Jati"
+        formJurusan = "Jakarta - Denpasar"
+    ElseIf formKodeBus = "SH" Then
+        formTarifDasar1 = 100000
+        formTarifDasar = "Rp. 100.000"
+        formNamaBus = "P.O. Hiba Utama"
+        formJurusan = "Jakarta - Kuningan"
+    ElseIf formKodeBus = "SJ" Then
+        formTarifDasar1 = 250000
+        formTarifDasar = "Rp. 250.000"
+        formNamaBus = "P.O. Tali Jaya"
+        formJurusan = "Jakarta - Surabaya"
+    ElseIf formKodeBus = "SN" Then
+        formTarifDasar1 = 200000
+        formTarifDasar = "Rp. 200.000"
+        formNamaBus = "P.O. Pahala Kencana"
+        formJurusan = "Jakarta - Semarang"
+    Else
+        formTarifDasar1 = 0
+        formTarifDasar = ""
+        formNamaBus = ""
+        formJurusan = ""
+    End If
+    formTotal1 = Val(formTarifDasar1) * Val(formJumlahTiket)
+    formTotal = "Rp. " + FormatNumber(formTotal1, 0)
+    If formKodeKelas = "BS" Then
+        formKelas = "Bisnis"
+        formTarifTambahan1 = 15 / 100 * Val(formTotal1)
+        formTarifTambahan = "Rp. " + FormatNumber(formTarifTambahan1, 0)
+        formDiskon1 = 5 / 100
+        formDiskon = "5%"
+    ElseIf formKodeKelas = "EK" Then
+        formKelas = "Ekonomi"
+        formTarifTambahan1 = 15 / 100 * Val(formTotal1)
+        formTarifTambahan = "Rp. " + FormatNumber(formTarifTambahan1, 0)
+        formDiskon1 = 5 / 100
+        formDiskon = "5%"
+    ElseIf formKodeKelas = "ES" Then
+        formKelas = "Eksekutif"
+        formTarifTambahan1 = 20 / 100 * Val(formTotal1)
+        formTarifTambahan = "Rp. " + FormatNumber(formTarifTambahan1, 0)
+        formDiskon1 = 10 / 100
+        formDiskon = "10%"
+    ElseIf formKodeKelas = "SE" Then
+        formKelas = "Super Eksekutif"
+        formTarifTambahan1 = 25 / 100 * Val(formTotal1)
+        formTarifTambahan = "Rp. " + FormatNumber(formTarifTambahan1, 0)
+        formDiskon1 = 10 / 100
+        formDiskon = "10%"
+    Else
+        formKelas = ""
+        formTarifTambahan1 = ""
+        formTarifTambahan = ""
+        formDiskon1 = 0
+        formDiskon = ""
+    End If
+    formBayar1 = Val(formTotal1) + Val(formTarifTambahan1) - Val(formDiskon1)
+    formBayar = "Rp. " + FormatNumber(formBayar1, 0)
+  End If
+End Sub
+
+Private Sub btnTambah_Click()
+    Call BukaDB
+    Dim tambahdataa
+    Dim cekdata
+    Dim sqlcekdata
+    cekdata = "SELECT * FROM Bayar WHERE NoPenumpang = '" & formNoPenumpang & "'"
+    Set sqlcekdata = KoneksiDB.Execute(cekdata)
+    If Not sqlcekdata.EOF Then
+        MsgBox "Data dengan No Penumpang " + formNoPenumpang + " sudah tersedia, harap masukkan No Penumpang yang baru ^_^"
+    Else
+        tambahdataa = "Insert into Bayar values('" & formNoPenumpang & "','" & formNamaPenumpang & "','" & formKodeBus & "','" & formKodeKelas & "','" & formJumlahTiket & "')"
+        KoneksiDB.Execute (tambahdataa)
+        MsgBox "Data Penjualan Tiket Bus Berhasil Ditambahkan ^_^"
+        Adodc1.Refresh
+    End If
+End Sub
+
+Private Sub Form_Load()
+  Call BukaDB
+  Adodc1.ConnectionString = KoneksiDB
+  Adodc1.RecordSource = "Bayar"
+  Adodc1.Refresh
+  Set DataGrid1.DataSource = Adodc1
+End Sub

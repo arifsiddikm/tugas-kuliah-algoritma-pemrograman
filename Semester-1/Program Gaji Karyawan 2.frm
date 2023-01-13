@@ -10,7 +10,7 @@ Begin VB.Form Form11
    ScaleHeight     =   10950
    ScaleWidth      =   16215
    StartUpPosition =   3  'Windows Default
-   Begin VB.OptionButton formGolongan3 
+   Begin VB.OptionButton Option3 
       BackColor       =   &H8000000B&
       Caption         =   "A3"
       BeginProperty Font 
@@ -28,7 +28,7 @@ Begin VB.Form Form11
       Top             =   3360
       Width           =   3015
    End
-   Begin VB.OptionButton formGolongan2 
+   Begin VB.OptionButton Option2 
       BackColor       =   &H8000000B&
       Caption         =   "A2"
       BeginProperty Font 
@@ -46,7 +46,7 @@ Begin VB.Form Form11
       Top             =   3360
       Width           =   2175
    End
-   Begin VB.OptionButton formGolongan1 
+   Begin VB.OptionButton formGolongan 
       BackColor       =   &H8000000B&
       Caption         =   "A1"
       BeginProperty Font 
@@ -312,7 +312,7 @@ Begin VB.Form Form11
       Left            =   240
       TabIndex        =   12
       Top             =   3360
-      Width           =   3975
+      Width           =   3855
    End
    Begin VB.Label Label2 
       BackColor       =   &H8000000D&
@@ -379,56 +379,3 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Sub btnHapus_Click()
-    formJamKerja = ""
-    formUpahHarian = ""
-    formUpahLembur = ""
-    formUpahTotal = ""
-End Sub
-
-Private Sub btnHitung_Click()
-
-    If formJamKerja = "" Then
-        formUpahTotal = ""
-        formUpahHarian = ""
-        formUpahLembur = ""
-    Else
-    
-        If formGolongan1.Value = True Then
-            formUpahHarian0 = 50000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = (formJamKerja - 8) * 10000
-            End If
-        ElseIf formGolongan2.Value = True Then
-            formUpahHarian0 = 60000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = Val(formJamKerja - 8) * 11000
-            End If
-        ElseIf formGolongan3.Value = True Then
-            formUpahHarian0 = 70000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = Val(formJamKerja - 8) * 12000
-            End If
-        End If
-        
-        formUpahTotal = Val(formUpahHarian0) + Val(formUpahLembur0)
-        formUpahHarian = "Rp. " + FormatNumber(formUpahHarian0, 0)
-        formUpahLembur = "Rp. " + FormatNumber(formUpahLembur0, 0)
-        formUpahTotal = "Rp. " + FormatNumber(formUpahTotal, 0)
-    
-    End If
-End Sub
-
-Private Sub btnTutup_Click()
-End
-End Sub
-
-Private Sub Option2_Click()
-
-End Sub

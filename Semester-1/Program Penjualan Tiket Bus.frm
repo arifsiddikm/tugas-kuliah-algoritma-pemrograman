@@ -461,57 +461,57 @@ Private Sub btnHitung_Click()
         formDiskon = ""
         formTotalBayar = ""
     Else
-        
-        Select Case formKodeTujuan
-        Case "A"
+        If formKodeTujuan = "A" Then
             formKotaTujuan = "Jakarta"
-        Case "B"
+        ElseIf formKodeTujuan = "B" Then
             formKotaTujuan = "Bandung"
-        Case "C"
+        ElseIf formKodeTujuan = "C" Then
             formKotaTujuan = "Cirebon"
-        Case "D"
+        ElseIf formKodeTujuan = "D" Then
             formKotaTujuan = "Yogyakarta"
-        End Select
-        
-        
-        Select Case formKodeKelas
-        Case "1 - Bisnis"
+        Else
+            formKotaTujuan = ""
+        End If
+
+        If formKodeKelas = "1 - Bisnis" Then
             formKelas = "Bisnis"
 
-            Select Case formKodeTujuan
-            Case "A"
+            If formKodeTujuan = "A" Then
                 formHargaTiket1 = 50000
                 formHargaTiket = "Rp. 50.000,-"
-            Case "B"
+            ElseIf formKodeTujuan = "B" Then
                 formHargaTiket1 = 120000
                 formHargaTiket = "Rp. 120.000,-"
-            Case "C"
+            ElseIf formKodeTujuan = "C" Then
                 formHargaTiket1 = 130000
                 formHargaTiket = "Rp. 130.000,-"
-            Case "D"
+            ElseIf formKodeTujuan = "D" Then
                 formHargaTiket1 = 150000
                 formHargaTiket = "Rp. 150.000,-"
-            End Select
-        
-        Case "2 - Ekonomi"
+            End If
+
+        ElseIf formKodeKelas = "2 - Ekonomi" Then
             formKelas = "Ekonomi"
 
-            Select Case formKodeTujuan
-            Case "A"
+            If formKodeTujuan = "A" Then
                 formHargaTiket1 = 35000
                 formHargaTiket = "Rp. 35.000,-"
-            Case "B"
+            ElseIf formKodeTujuan = "B" Then
                 formHargaTiket1 = 80000
                 formHargaTiket = "Rp. 80.000,-"
-            Case "C"
+            ElseIf formKodeTujuan = "C" Then
                 formHargaTiket1 = 90000
                 formHargaTiket = "Rp. 90.000,-"
-            Case "D"
+            ElseIf formKodeTujuan = "D" Then
                 formHargaTiket1 = 120000
                 formHargaTiket = "Rp. 120.000,-"
-            End Select
-            
-        End Select
+            End If
+
+        Else
+            formKelas = ""
+            formHargaTiket1 = ""
+            formHargaTiket = ""
+        End If
 
         formTotalAwal1 = Val(formJumlahTiket) * Val(formHargaTiket1)
         formTotalAwal = "Rp. " + FormatNumber(formTotalAwal1, 0)

@@ -351,43 +351,32 @@ Private Sub btnHapus_Click()
 End Sub
 
 Private Sub btnHitung_Click()
-
-    If formJamKerja = "" Then
-        formUpahTotal = ""
-        formUpahHarian = ""
-        formUpahLembur = ""
-    Else
-    
-        Select Case formGolongan
-        Case "A1"
-            formUpahHarian0 = 50000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = (formJamKerja - 8) * 10000
-            End If
-        Case "A2"
-            formUpahHarian0 = 60000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = Val(formJamKerja - 8) * 11000
-            End If
-        Case "A3"
-            formUpahHarian0 = 70000
-            If formJamKerja <= 8 Then
-                formUpahLembur0 = 0
-            Else
-                formUpahLembur0 = Val(formJamKerja - 8) * 12000
-            End If
-        End Select
-        
-        formUpahTotal = Val(formUpahHarian0) + Val(formUpahLembur0)
-        formUpahHarian = "Rp. " + FormatNumber(formUpahHarian0, 0)
-        formUpahLembur = "Rp. " + FormatNumber(formUpahLembur0, 0)
-        formUpahTotal = "Rp. " + FormatNumber(formUpahTotal, 0)
-    
+    If formGolongan = "A1" Then
+        formUpahHarian0 = 50000
+        If formJamKerja <= 8 Then
+            formUpahLembur0 = 0
+        Else
+            formUpahLembur0 = (formJamKerja - 8) * 10000
+        End If
+    ElseIf formGolongan = "A2" Then
+        formUpahHarian0 = 60000
+        If formJamKerja <= 8 Then
+            formUpahLembur0 = 0
+        Else
+            formUpahLembur0 = Val(formJamKerja - 8) * 11000
+        End If
+    ElseIf formGolongan = "A3" Then
+        formUpahHarian0 = 70000
+        If formJamKerja <= 8 Then
+            formUpahLembur0 = 0
+        Else
+            formUpahLembur0 = Val(formJamKerja - 8) * 12000
+        End If
     End If
+    formUpahTotal = Val(formUpahHarian0) + Val(formUpahLembur0)
+    formUpahHarian = "Rp. " + FormatNumber(formUpahHarian0, 0)
+    formUpahLembur = "Rp. " + FormatNumber(formUpahLembur0, 0)
+    formUpahTotal = "Rp. " + FormatNumber(formUpahTotal, 0)
 End Sub
 
 Private Sub btnTutup_Click()
